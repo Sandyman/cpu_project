@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -26,7 +26,9 @@ reg reset = 1;
 reg clock = 0;
 
 wire[11:0] dut_out;
-wire[11:0] dut_in;
+reg[11:0] dut_in = 0;
+
+integer i;
 
 register dut(
     .in (dut_in),
@@ -35,11 +37,16 @@ register dut(
     .clk (clock)
 );
 
-always #10 clock <= ~clock;
+always #2 clock <= ~clock;
 
 initial
 begin
-    #15 reset <= 0;
+    #5 reset <= 0;
+    
+    #10 for (i=0; i <= 12'b111111111111; i=i+1)
+    begin
+        #2 dut_in = i;
+    end
 end
 
 endmodule
