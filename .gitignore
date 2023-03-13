@@ -23,5 +23,11 @@
 !*.bmm
 !*.xmp
 
-*/*.runs
-*/*.sim
+*.cache/
+*.runs/
+*.sim/
+*.hw/
+*.ip_user_files/
+*.jou
+*.log
+*.str
