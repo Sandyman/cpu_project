@@ -1,0 +1,27 @@
+# Exclude all
+*
+
+!*/
+!.gitignore
+
+# Do not eignore source files
+!*.vhd
+!*.v
+!*.bd
+!*.edif
+
+# Project files
+!*.xpr
+
+# Constraint files
+!*.xdc 
+
+# C files
+!*.c
+!*.h
+!*.elf
+!*.bmm
+!*.xmp
+
+*/*.runs
+*/*.sim
