@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03/13/2023 08:26:45 PM
+// Create Date: 03/13/2023 07:59:59 PM
 // Design Name: 
-// Module Name: register_tb
+// Module Name: register
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,33 +20,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module register_tb;
+module register(
+    input [11:0] in,
+    output [11:0] out,
+    input rst,
+    input clk
+    );
 
-reg reset = 1;
-reg clock = 0;
+logic [11:0] data = 12'd0;
 
-wire[11:0] dut_out;
-reg[11:0] dut_in = 0;
+assign out = data;
 
-integer i;
-
-register dut(
-    .in (dut_in),
-    .out (dut_out),
-    .rst (reset),
-    .clk (clock)
-);
-
-always #2 clock <= ~clock;
-
-initial
+always @ (posedge clk, posedge rst)
 begin
-    #3 reset <= 0;
-    
-    #3 for (i=0; i <= 12'b111111111111; i=i+1)
-    begin
-        #2 dut_in = i;
-    end
+    if (rst)
+        data <= 12'd0;
+    else
+        data <= in;
 end
 
 endmodule
