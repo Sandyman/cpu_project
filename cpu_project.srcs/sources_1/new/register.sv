@@ -31,7 +31,7 @@ logic [11:0] data = 12'd0;
 
 assign out = data;
 
-always @ (posedge clk, posedge rst)
+always_ff @ (posedge clk)
 begin
     if (rst)
         data <= 12'd0;
