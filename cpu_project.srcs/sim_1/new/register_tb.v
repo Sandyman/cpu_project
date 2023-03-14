@@ -41,9 +41,9 @@ always #2 clock <= ~clock;
 
 initial
 begin
-    #5 reset <= 0;
+    #3 reset <= 0;
     
-    #10 for (i=0; i <= 12'b111111111111; i=i+1)
+    #3 for (i=0; i <= 12'b111111111111; i=i+1)
     begin
         #2 dut_in = i;
     end

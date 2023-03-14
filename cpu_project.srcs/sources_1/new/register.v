@@ -31,7 +31,7 @@ reg [11:0] data = 12'd0;
 
 assign out = data;
 
-always @ (posedge clk)
+always @ (posedge clk, posedge rst)
 begin
     if (rst)
         data <= 12'd0;
