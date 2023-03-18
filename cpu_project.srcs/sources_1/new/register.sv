@@ -21,24 +21,26 @@
 
 `include "types.svh"
 
+interface reg_if (input clk);
 
-module register(
-    input logic32 in,
-    output logic32 out,
-    input rst,
-    input clk
-    );
+    logic rst;
+    logic32 in;
+    logic32 out;
+    
+    modport TB (input clk, out, output rst, in);
+    
+    modport DUT (input clk, rst, in, output out);
 
-logic32 data = 32'd0;
+endinterface
 
-assign out = data;
+module register (reg_if _if);
 
-always_ff @ (posedge clk)
-begin
-    if (rst)
-        data <= 32'd0;
-    else
-        data <= in;
-end
+    always_ff @ (posedge _if.clk)
+    begin
+        if (_if.rst)
+            _if.out <= 32'd0;
+        else
+            _if.out <= _if.in;
+    end
 
 endmodule

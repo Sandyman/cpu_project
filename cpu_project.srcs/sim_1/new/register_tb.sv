@@ -22,31 +22,36 @@
 
 module register_tb;
 
-logic reset = 1;
-logic clock = 0;
+    bit clk;
 
-logic32 dut_out;
-logic32 dut_in = 0;
-
-integer i;
-
-register dut(
-    .in (dut_in),
-    .out (dut_out),
-    .rst (reset),
-    .clk (clock)
-);
-
-always #2 clock <= ~clock;
-
-initial
-begin
-    #3 reset <= 0;
+    always #10 clk = ~clk;
     
-    #3 for (i=0; i <= 32'b11111111111111111111111111111111; i=i+1)
-    begin
-        #2 dut_in = i;
-    end
-end
+    reg_if  _reg0(clk);
+    
+    register dut(reg_if.DUT);
 
+    logic rst;    
+    logic32 in_data;
+    logic32 out_data;
+    
+    assign rst = _reg0.rst;
+    assign out_data = _reg0.in;
+    assign in_data = _reg0.out;
+    
+    initial
+    begin
+        _reg0.rst <= 1;
+        _reg0.in <= 32'd0;
+
+        #15 _reg0.rst <= 0;
+
+        #30 _reg0.in <= 999;
+        #60 _reg0.in <= 32'b11111111111111111111111111111111;
+        #90 _reg0.in <= 1;
+        #120 _reg0.in <= 100000;
+        #150 _reg0.in <= 0;
+        #180 _reg0.in <= 31 + 65536;
+        #200 $finish;       
+    end
+    
 endmodule
