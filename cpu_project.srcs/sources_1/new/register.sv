@@ -19,22 +19,24 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "types.svh"
+
 
 module register(
-    input [11:0] in,
-    output [11:0] out,
+    input logic32 in,
+    output logic32 out,
     input rst,
     input clk
     );
 
-logic [11:0] data = 12'd0;
+logic32 data = 32'd0;
 
 assign out = data;
 
 always_ff @ (posedge clk)
 begin
     if (rst)
-        data <= 12'd0;
+        data <= 32'd0;
     else
         data <= in;
 end

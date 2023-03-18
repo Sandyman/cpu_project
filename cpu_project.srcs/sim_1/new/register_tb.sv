@@ -25,8 +25,8 @@ module register_tb;
 logic reset = 1;
 logic clock = 0;
 
-logic[11:0] dut_out;
-logic[11:0] dut_in = 0;
+logic32 dut_out;
+logic32 dut_in = 0;
 
 integer i;
 
@@ -43,7 +43,7 @@ initial
 begin
     #3 reset <= 0;
     
-    #3 for (i=0; i <= 12'b111111111111; i=i+1)
+    #3 for (i=0; i <= 32'b11111111111111111111111111111111; i=i+1)
     begin
         #2 dut_in = i;
     end

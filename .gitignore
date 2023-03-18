@@ -9,6 +9,8 @@
 !*.v
 !*.bd
 !*.edif
+!*.sv
+!*.svh
 
 # Project files
 !*.xpr
