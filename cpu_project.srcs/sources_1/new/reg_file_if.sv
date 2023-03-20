@@ -31,7 +31,9 @@ interface reg_file_if (input clk);
     logic32 in;     // input
     logic32 out_1;  // output 1 (rs)
     logic32 out_2;  // output 2 (rt)
-    
+
+    modport TB (input clk, out_1, out_2, output in, rd, rs, rt, wr, rst);
+
     modport RTL (input clk, in, rd, rs, rt, wr, rst, output out_1, out_2);
 
 endinterface

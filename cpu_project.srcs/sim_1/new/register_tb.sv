@@ -27,7 +27,6 @@ module register_tb;
     always #10 clk = ~clk;
     
     reg_if  _reg0(clk);
-    
     register dut(reg_if.RTL);
 
     logic rst;
