@@ -32,17 +32,14 @@ module register_file (reg_file_if.RTL _if);
     always_ff @ (posedge _if.clk)
     begin
         if (_if.rst)
-            registers[0] <= 'd0;
+            for (integer i = 0; i < 'd32; i = i + 1)
+                registers[i] <= 'd0;
         else
-        begin
             if (_if.wr)
-            begin
                 if (_if.rd != 0)
                     registers[_if.rd] <= _if.in;
                 else
                     registers[0] <= 'd0;
-            end
-        end
     end
 
 endmodule
