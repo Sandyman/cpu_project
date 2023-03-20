@@ -28,15 +28,15 @@ module register_tb;
     
     reg_if  _reg0(clk);
     
-    register dut(reg_if.DUT);
+    register dut(reg_if.RTL);
 
-    logic rst;    
+    logic rst;
     logic32 in_data;
     logic32 out_data;
     
     assign rst = _reg0.rst;
-    assign out_data = _reg0.in;
-    assign in_data = _reg0.out;
+    assign out_data = _reg0.out;
+    assign in_data = _reg0.in;
     
     initial
     begin

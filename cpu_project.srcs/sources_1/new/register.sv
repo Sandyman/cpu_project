@@ -29,7 +29,7 @@ interface reg_if (input clk);
     
     modport TB (input clk, out, output rst, in);
     
-    modport DUT (input clk, rst, in, output out);
+    modport RTL (input clk, rst, in, output out);
 
 endinterface
 
