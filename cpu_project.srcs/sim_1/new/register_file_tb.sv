@@ -24,7 +24,7 @@ module register_file_tb;
 
     bit clk;
 
-    always #10 clk = ~clk;
+    always #4 clk = ~clk;
 
     reg_file_if     reg_file0(clk);
     register_file   dut(reg_file0.RTL);
@@ -55,14 +55,21 @@ module register_file_tb;
         reg_file0.rs <= 'd0;
         reg_file0.rt <= 'd0;
         reg_file0.in <= 'd0;
-        #15 reg_file0.rst <= 'b0;
-        #25 reg_file0.rd <= 'd3;
-        #25 reg_file0.in = 'd12345678;
-        #25 reg_file0.wr = 'b1;
-        #35 reg_file0.wr = 'b0;
-        #45 reg_file0.rs <= 'd3;
-        #55 reg_file0.rt <= 'd0;
-        #70 $finish;
+        #20 reg_file0.rst <= 'b0;
+        for (integer i = 0; i < 'd32; i = i + 1)
+        begin
+            #15 reg_file0.wr <= 'b1;
+                reg_file0.in <= 1 << i;
+                reg_file0.rd <= i;
+            #15 reg_file0.wr <= 'b0;
+        end
+        for (integer i = 0; i < 'd32; i = i + 1)
+        begin
+            #20 reg_file0.rs <= i;
+                reg_file0.in <= i;
+            #0  reg_file0.rt <= (i + 16) % 32;
+        end
+        #20 $finish;
     end
 
 endmodule
