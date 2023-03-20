@@ -1,11 +1,11 @@
-`timescale 1ns / 1ns
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03/13/2023 07:59:59 PM
+// Create Date: 03/20/2023 06:12:45 PM
 // Design Name: 
-// Module Name: register
+// Module Name: reg_if
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,16 +20,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `include "types.svh"
-`include "reg_if.sv"
 
-module register (reg_if _if);
+interface reg_if (input clk);
 
-    always_ff @ (posedge _if.clk)
-    begin
-        if (_if.rst)
-            _if.out <= 32'd0;
-        else
-            _if.out <= _if.in;
-    end
+    logic rst;
+    logic32 in;
+    logic32 out;
+    
+    modport TB (input clk, out, output rst, in);
+    
+    modport RTL (input clk, rst, in, output out);
 
-endmodule
+endinterface

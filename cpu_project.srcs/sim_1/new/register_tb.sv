@@ -51,7 +51,10 @@ module register_tb;
         #120 _reg0.in <= 100000;
         #150 _reg0.in <= 0;
         #180 _reg0.in <= 31 + 65536;
-        #200 $finish;       
+        #200 _reg0.rst <= 1;
+        #220 _reg0.rst <= 0;
+        #240 _reg0.in <= 1078;
+        #260 $finish;       
     end
     
 endmodule
