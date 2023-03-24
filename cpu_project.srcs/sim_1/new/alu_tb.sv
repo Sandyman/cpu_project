@@ -29,14 +29,16 @@ module alu_tb;
     logic5 ctrl;
     logic16 imm;
     logic32 imm32;
-    logic32 in;
+    logic33 imm33s;
+    logic32 result;
     
     assign alu0.imm = imm;
     assign alu0.ctrl = ctrl;
-    assign in = alu0.dest;
+    assign result = alu0.dest;
     assign alu0.src_1 = out_1;
     assign alu0.src_2 = out_2;
     assign imm32 = $signed( { {16{imm[15]}}, imm } );
+    assign imm33s = $signed( { 1'b1, imm32 } );
 
     initial
     begin

@@ -29,6 +29,7 @@ module alu (alu_if.RTL _if);
     logic5 shamt;
     logic16 imm;
     logic32 src_1, src_2, dest, imm32;
+    logic33 imm33u;
 
     assign ctrl = _if.ctrl;
     assign imm = _if.imm;
@@ -36,7 +37,8 @@ module alu (alu_if.RTL _if);
     assign _if.dest = dest;
     assign src_1 = _if.src_1;
     assign src_2 = _if.src_2;
-    assign imm32 = $signed( { {16{imm[15]}}, imm } );
+    assign imm32 = { {16{imm[15]}}, imm };
+    assign imm33s = { imm[15], imm32 };
 
     always_comb
     begin
@@ -47,10 +49,21 @@ module alu (alu_if.RTL _if);
             CTRL_SLLV:  dest = src_2 << src_1;
             CTRL_SRLV:  dest = src_2 >> src_1;
             CTRL_SRAV:  dest = $signed(src_2) >>> src_1;
-            CTRL_ADDI:  dest = src_2 + $signed(imm32);      // These ADDI instructions are weird (incorrect?)
-            CTRL_ADDIU: dest = src_2 + $signed(imm32);
+            CTRL_ADDI:
+            begin
+                logic33 src33s, dest33;
+                src33s = { src_2[31], src_2 };
+                dest33 = src33s + imm33s;
+                dest = dest33[31:0];
+            end
+            CTRL_ADDIU: dest = src_2 + imm32;
             CTRL_SLTI:  dest = ( $signed(src_2) < imm32 );
-            CTRL_SLTIU: dest = ( src_2 < $unsigned(imm32) );
+            CTRL_SLTIU:
+            begin
+                // {imm} is sign-extended but we do an UNsigned comparison
+                logic33 src33u = { 0, src_2 };
+                dest = ( src33u < imm33u );
+            end
             CTRL_ANDI:  dest = src_2 & imm;
             CTRL_ORI:   dest = src_2 | imm;
             CTRL_XORI:  dest = src_2 ^ imm;
