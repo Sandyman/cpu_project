@@ -32,8 +32,27 @@ typedef enum logic6 {
     XOR     = 'b100110,     // 38
     NOR     = 'b100111,     // 39
     SLTU    = 'b101001,     // 41
-    SLT     = 'b101010,     // 42
+    SLT     = 'b101010      // 42
 } function_t;
+
+typedef enum logic5 {
+    CTRL_SLL     = 'b00000,
+    CTRL_SRL     = 'b00010,
+    CTRL_SRA     = 'b00011,
+    CTRL_SLLV    = 'b00100,
+    CTRL_SRLV    = 'b00110,
+    CTRL_SRAV    = 'b00111,
+    CTRL_ADD     = 'b10000,
+    CTRL_ADDU    = 'b10001,
+    CTRL_SUB     = 'b10010,
+    CTRL_SUBU    = 'b10011,
+    CTRL_AND     = 'b10100,
+    CTRL_OR      = 'b10101,
+    CTRL_XOR     = 'b10110,
+    CTRL_NOR     = 'b10111,     
+    CTRL_SLTU    = 'b11001,
+    CTRL_SLT     = 'b11010
+} alu_ctrl_t;
 
 // Opcodes for the Immediate (I) encoding
 // and the Jump (J) encoding.
@@ -62,7 +81,7 @@ typedef enum logic6 {
     LHU     = 'b100101,     // 37
     SB      = 'b101000,     // 40
     SH      = 'b101001,     // 41
-    SW      = 'b101011,     // 43
+    SW      = 'b101011      // 43
 } opcode_t;
 
 `endif // OPCODES_SVH
