@@ -28,6 +28,7 @@ module alu_tb;
     logic32 out_1, out_2;
     logic5 ctrl;
     logic16 imm;
+    logic32 imm32;
     logic32 in;
     
     assign alu0.imm = imm;
@@ -35,6 +36,7 @@ module alu_tb;
     assign in = alu0.dest;
     assign alu0.src_1 = out_1;
     assign alu0.src_2 = out_2;
+    assign imm32 = $signed( { {16{imm[15]}}, imm } );
 
     initial
     begin
@@ -133,6 +135,18 @@ module alu_tb;
         ctrl <= CTRL_SRAV;
         out_1 <= 3;
         out_2 <= 32'hffffffff;
+
+        #1
+        imm = 32768;
+        ctrl <= CTRL_ADDI;
+        out_1 <= 1;
+        out_2 <= 32768;
+
+        #1
+        imm = 32768;
+        ctrl <= CTRL_ADDIU;
+        out_1 <= 1;
+        out_2 <= 32768;
 
         #1  
         $finish;
