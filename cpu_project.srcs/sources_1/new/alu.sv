@@ -26,9 +26,13 @@
 module alu (alu_if.RTL _if);
 
     logic5 ctrl;
+    logic5 shamt;
+    logic16 imm;
     logic32 src_1, src_2, dest;
     
     assign ctrl = _if.ctrl;
+    assign imm = _if.imm;
+    assign shamt = imm[10:6];
     assign _if.dest = dest;
     assign src_1 = _if.src_1;
     assign src_2 = _if.src_2;
@@ -36,9 +40,12 @@ module alu (alu_if.RTL _if);
     always_comb
     begin
         case (ctrl)
+            CTRL_SLL:   dest = src_2 << shamt;
+            CTRL_SRL:   dest = src_2 >> shamt;
+            CTRL_SRA:   dest = $signed(src_2) >>> shamt;
             CTRL_SLLV:  dest = src_2 << src_1;
-            CTRL_SRLV:  dest = $signed(src_2) >>> src_1;
-            CTRL_SRAV:  dest = src_2 >> src_1;
+            CTRL_SRLV:  dest = src_2 >> src_1;
+            CTRL_SRAV:  dest = $signed(src_2) >>> src_1;
             CTRL_ADD:   dest = src_1 + src_2;
             CTRL_ADDU:  dest = src_1 + src_2;
             CTRL_SUB:   dest = src_1 - src_2;

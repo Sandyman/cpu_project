@@ -26,10 +26,11 @@ interface alu_if;
     logic32 dest;
     logic32 src_1;
     logic32 src_2;
+    logic16 imm;
     logic5 ctrl;
     
-    modport TB (input dest, output src_1, src_2, ctrl);
+    modport TB (input dest, output src_1, src_2, ctrl, imm);
 
-    modport RTL (input src_1, src_2, ctrl, output dest);
+    modport RTL (input src_1, src_2, ctrl, imm, output dest);
     
 endinterface

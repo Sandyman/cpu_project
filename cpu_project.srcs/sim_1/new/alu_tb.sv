@@ -27,8 +27,10 @@ module alu_tb;
     
     logic32 out_1, out_2;
     logic5 ctrl;
+    logic16 imm;
     logic32 in;
     
+    assign alu0.imm = imm;
     assign alu0.ctrl = ctrl;
     assign in = alu0.dest;
     assign alu0.src_1 = out_1;
@@ -36,6 +38,8 @@ module alu_tb;
 
     initial
     begin
+        imm <= 0;
+
         ctrl <= CTRL_ADD;       // ADD
         out_1 <= 1;
         out_2 <= 2;
@@ -86,19 +90,44 @@ module alu_tb;
         out_2 <= 5000000;
 
         #1
-        ctrl <= CTRL_SLLV;
-        out_1 <= 4;
-        out_2 <= 1;
-        
+        imm <= 2 << 6;
+        ctrl <= CTRL_SLL;
+        out_1 <= 1;
+        out_2 <= 6;
+
         #1
-        ctrl <= CTRL_SRLV;
-        out_1 <= 5;
+        imm <= 24 << 6;
+        ctrl <= CTRL_SRL;
+        out_1 <= 1;
+        out_2 <= 32'hffffffff;
+
+        #1
+        imm <= 24 << 6;
+        ctrl <= CTRL_SRA;
+        out_1 <= 1;
+        out_2 <= 32'hffffffff;
+
+        #1
+        imm <= 24 << 6;
+        ctrl <= CTRL_SRA;
+        out_1 <= 1;
         out_2 <= 32'h7fffffff;
 
         #1
+        imm <= 0;
+        ctrl <= CTRL_SLLV;
+        out_1 <= 4;
+        out_2 <= 1;
+
+        #1
         ctrl <= CTRL_SRLV;
-        out_1 <= 16;
+        out_1 <= 5;
         out_2 <= 32'h8fffffff;
+
+        #1
+        ctrl <= CTRL_SRAV;
+        out_1 <= 16;
+        out_2 <= 32'h7fffffff;
 
         #1
         ctrl <= CTRL_SRAV;
