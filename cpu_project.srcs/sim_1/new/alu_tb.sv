@@ -129,6 +129,12 @@ module alu_tb;
         out_2 <= 32'hffff4e21;
 
         #1
+        ctrl <= CTRL_ORI;
+        imm = 16'hc038;
+        out_1 <= 1;
+        out_2 <= 32'hff3f4831;
+
+        #1
         imm <= 0;
         ctrl <= CTRL_ADD;
         out_1 <= 1;
