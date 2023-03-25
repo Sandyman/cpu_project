@@ -37,63 +37,11 @@ module alu_tb;
     assign result = alu0.dest;
     assign alu0.src_1 = out_1;
     assign alu0.src_2 = out_2;
-    assign imm32 = $signed( { {16{imm[15]}}, imm } );
-    assign imm33s = $signed( { 1'b1, imm32 } );
+    assign imm32 = { {16{imm[15]}}, imm };
+    assign imm33s = { {17{imm[15]}}, imm };
 
     initial
     begin
-        imm <= 0;
-
-        ctrl <= CTRL_ADD;       // ADD
-        out_1 <= 1;
-        out_2 <= 2;
-
-        #1
-        ctrl <= CTRL_ADD;
-        out_1 <= 2;
-        out_2 <= -1; 
-        
-        #1
-        ctrl <= CTRL_ADD;
-        out_1 <= 32768;
-        out_2 <= -128;
-        
-        #1
-        ctrl <= CTRL_AND;
-        out_1 <= 32'hffffffff;
-        out_2 <= 32'h55aa55aa;
-        
-        #1
-        ctrl <= CTRL_XOR;
-        out_1 <= 32'hffffffff;
-        out_2 <= 32'h55aa55aa;
-
-        #1
-        ctrl <= CTRL_NOR;
-        out_1 <= 32'h55aa55aa;
-        out_2 <= 32'h00330033;
-
-        #1
-        ctrl <= CTRL_SLT;
-        out_1 <= -3;
-        out_2 <= 5;
-
-        #1
-        ctrl <= CTRL_SLT;
-        out_1 <= -3;
-        out_2 <= -5;
-
-        #1
-        ctrl <= CTRL_SLTU;
-        out_1 <= 10;
-        out_2 <= 5;
-
-        #1
-        ctrl <= CTRL_SLTU;
-        out_1 <= 100000;
-        out_2 <= 5000000;
-
-        #1
         imm <= 2 << 6;
         ctrl <= CTRL_SLL;
         out_1 <= 1;
@@ -139,8 +87,20 @@ module alu_tb;
         out_2 <= 32'hffffffff;
 
         #1
+        imm = 32767;
+        ctrl <= CTRL_ADDI;
+        out_1 <= 1;
+        out_2 <= 32768;
+
+        #1
         imm = 32768;
         ctrl <= CTRL_ADDI;
+        out_1 <= 1;
+        out_2 <= 32768;
+
+        #1
+        imm = 32767;
+        ctrl <= CTRL_ADDIU;
         out_1 <= 1;
         out_2 <= 32768;
 
@@ -149,6 +109,69 @@ module alu_tb;
         ctrl <= CTRL_ADDIU;
         out_1 <= 1;
         out_2 <= 32768;
+
+        #1
+        ctrl <= CTRL_SLTIU;
+        imm = 32768;
+        out_1 <= 1;
+        out_2 <= 32'hffffffff;
+        
+        #1
+        ctrl <= CTRL_SLTIU;
+        imm = 32768;
+        out_1 <= 1;
+        out_2 <= 32'hffff7000;
+
+        #1
+        imm <= 0;
+        ctrl <= CTRL_ADD;
+        out_1 <= 1;
+        out_2 <= 2;
+
+        #1
+        ctrl <= CTRL_ADD;
+        out_1 <= 2;
+        out_2 <= -1; 
+        
+        #1
+        ctrl <= CTRL_ADD;
+        out_1 <= 32768;
+        out_2 <= -128;
+        
+        #1
+        ctrl <= CTRL_AND;
+        out_1 <= 32'hffffffff;
+        out_2 <= 32'h55aa55aa;
+        
+        #1
+        ctrl <= CTRL_XOR;
+        out_1 <= 32'hffffffff;
+        out_2 <= 32'h55aa55aa;
+
+        #1
+        ctrl <= CTRL_NOR;
+        out_1 <= 32'h55aa55aa;
+        out_2 <= 32'h00330033;
+
+        #1
+        ctrl <= CTRL_SLTU;
+        out_1 <= 10;
+        out_2 <= 5;
+
+        #1
+        ctrl <= CTRL_SLTU;
+        out_1 <= 100000;
+        out_2 <= 5000000;
+
+        #1
+        ctrl <= CTRL_SLT;
+        out_1 <= -3;
+        out_2 <= 5;
+
+        #1
+        ctrl <= CTRL_SLT;
+        out_1 <= -3;
+        out_2 <= -5;
 
         #1  
         $finish;
