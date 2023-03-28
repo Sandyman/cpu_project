@@ -4,7 +4,7 @@
 `include "types.svh"
 
 // The following function codes all go with the 
-// "opcode" REGENC ('b000000). They are basically
+// "opcode" ALUFN ('b000000). They are basically
 // the "register encoding" operations.
 typedef enum logic6 {
     SLL     = 'b000000,     //  0
@@ -56,7 +56,6 @@ typedef enum logic5 {
     CTRL_AND     = 'b10100,
     CTRL_OR      = 'b10101,
     CTRL_XOR     = 'b10110,
-    CTRL_NOR     = 'b10111,     
     CTRL_SLTU    = 'b11001,
     CTRL_SLT     = 'b11010
 } alu_ctrl_t;
@@ -64,7 +63,7 @@ typedef enum logic5 {
 // Opcodes for the Immediate (I) encoding
 // and the Jump (J) encoding.
 typedef enum logic6 {
-    REGENC  = 'b000000,     //  0 - see function_t above
+    ALUFN   = 'b000000,     //  0 - see function_t above
     J       = 'b000010,     //  2
     JAL     = 'b000011,     //  3
     BEQ     = 'b000100,     //  4
@@ -72,7 +71,6 @@ typedef enum logic6 {
     BLEZ    = 'b000110,     //  6
     BGTZ    = 'b000111,     //  7
     ADDI    = 'b001000,     //  8
-    ADDIU   = 'b001001,     //  9
     SLTI    = 'b001010,     // 10
     SLTIU   = 'b001011,     // 11
     ANDI    = 'b001100,     // 12

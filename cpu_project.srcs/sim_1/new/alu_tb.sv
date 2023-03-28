@@ -167,11 +167,6 @@ module alu_tb;
         out_2 <= 32'h55aa55aa;
 
         #1
-        ctrl <= CTRL_NOR;
-        out_1 <= 32'h55aa55aa;
-        out_2 <= 32'h00330033;
-
-        #1
         ctrl <= CTRL_SLTU;
         out_1 <= 10;
         out_2 <= 5;
